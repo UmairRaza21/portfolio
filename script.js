@@ -276,23 +276,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxTitle = document.getElementById('lightboxTitle');
   const lightboxClose = document.getElementById('lightboxClose');
 
-  // Certificate image map — update paths when images are available
-  const certImageMap = {
-    'Diploma of Information Technology': '../certification/Gemini_Generated_Image_i4xro0i4xro0i4xr.png',
-    'Graphic Designing': 'Graphic_design.jpg',
-    'Digital Marketing': 'Digital_marketing.jpg',
-    'Freelancing': 'DSTP_Certificate.jpg'
-  };
-
-
   document.querySelectorAll('.cert-card').forEach(card => {
     card.addEventListener('click', () => {
       const certName = card.getAttribute('data-cert');
-      const imgSrc = certImageMap[certName];
+      const certImage = card.querySelector('.cert-image');
+      const imgSrc = certImage?.getAttribute('src');
+
       if (imgSrc) {
         lightboxImage.src = imgSrc;
-        lightboxImage.alt = certName;
-        lightboxTitle.textContent = certName;
+        lightboxImage.alt = certName || certImage?.alt || 'Certificate';
+        lightboxTitle.textContent = certName || 'Certificate';
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
