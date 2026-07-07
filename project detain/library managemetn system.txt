@@ -1,0 +1,29 @@
+## Library Management System
+
+### 1. Project Overview
+
+A menu-driven Library Management System developed in C to automate daily library operations. The application manages book records, issue and return transactions, and maintains persistent data using file handling, reducing manual work and improving record accuracy.
+
+### 2. Problem Statement
+
+Traditional library systems rely on manual record keeping, making it difficult to manage large collections, track issued books, and prevent data duplication. This project provides a digital solution that automates these processes and improves efficiency.
+
+### 3. Key Features
+
+* Secure administrator login
+* Add, update, delete, and view book records
+* Search books by ID, title, or author
+* Issue and return book management
+* Automatic inventory updates
+* Transaction history tracking
+* Persistent data storage using text files
+
+### 4. Technologies Used
+
+* **Language:** C Programming
+* **Concepts:** Structures, Functions, File Handling, String Manipulation
+* **Techniques:** Modular Programming, Conditional Statements, Loops, Date & Time Functions
+
+### 5. Outcome
+
+The system successfully automates library management by reducing paperwork, ensuring accurate record keeping, and providing fast access to book information. It demonstrates practical implementation of core C programming concepts while delivering a reliable and efficient console-based application.
