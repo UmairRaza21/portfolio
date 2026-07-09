@@ -606,22 +606,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(contactForm);
         const response = await fetch(contactForm.action, {
           method: 'POST',
-          body: new URLSearchParams(formData),
-          headers: {
-            'Accept': 'application/json'
-          }
+          body: formData
         });
 
-        if (response.ok) {
+        let responseData = null;
+        const contentType = response.headers.get('content-type') || '';
+
+        if (contentType.includes('application/json')) {
+          try {
+            responseData = await response.json();
+          } catch (parseError) {
+            responseData = null;
+          }
+        } else {
+          responseData = await response.text();
+        }
+
+        const isSuccess = response.ok && (
+          (responseData && typeof responseData === 'object' && responseData.ok !== false) ||
+          typeof responseData === 'string'
+        );
+
+        if (isSuccess) {
           contactForm.reset();
           formStatus.className = 'form-status success';
           formStatus.textContent = 'Your message has been sent successfully. I will reply soon.';
         } else {
-          throw new Error('Unable to send message right now.');
+          const errorMessage = responseData && responseData.errors && responseData.errors.length
+            ? responseData.errors.map(err => err.message).join(' ')
+            : 'Message could not be sent. Please contact me directly via email or WhatsApp.';
+
+          throw new Error(errorMessage);
         }
       } catch (error) {
         formStatus.className = 'form-status error';
-        formStatus.textContent = 'Message could not be sent. Please contact me directly via email or WhatsApp.';
+        formStatus.textContent = error.message || 'Message could not be sent. Please contact me directly via email or WhatsApp.';
       } finally {
         contactSubmitBtn.disabled = false;
         contactSubmitBtn.innerHTML = originalButtonContent;
